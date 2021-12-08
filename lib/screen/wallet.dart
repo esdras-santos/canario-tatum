@@ -16,25 +16,32 @@ class _WalletState extends State<Wallet> {
   User user = User();
   var etherBalance = " ";
   var algoBalance = " ";
+  var ethadd = " ";
 
   @override
   void initState() {
+    
+    super.initState();
     // this asset list need to be populated with the api data
     user.balance("eth").then((value) {
-      etherBalance = "$value";
+      setState(() {
+        etherBalance = "$value";
+      });
       return user.balance("algo");
     }).then((value) {
-      algoBalance = "$value";
+      setState(() {
+        algoBalance = "$value";
+      });
       return user.etherAddress();
-    }).then((value){
-      assetList.add(assetsCard('images/algorand-algo-logo.png', 'ALGO',
-        etherBalance, user.wallets["ALGO"]!["address"]!));
-      assetList.add(assetsCard('images/algorand-algo-logo.png', 'ETH',
-        etherBalance, value));
+    }).then((value) {
+      setState(() {
+        ethadd = value;
+      });
     });
 
-    super.initState();
   }
+
+  
 
   Widget shader(String text, TextStyle style) {
     return ShaderMask(
@@ -220,18 +227,21 @@ class _WalletState extends State<Wallet> {
   Widget assetsCard(
       String iconPath, String symbol, String balance, String address) {
     return Card(
+      elevation: 8.0,
       child: Container(
         width: 700.0,
         height: 100.0,
         child: Row(
+          
           children: <Widget>[
+            SizedBox(width: 40),
             Container(
                 width: 50.0,
                 height: 50.0,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: AssetImage(iconPath), fit: BoxFit.fill))),
+                        image: AssetImage(iconPath), fit: BoxFit.fill,),),),
             SizedBox(
               width: 19.0,
             ),
@@ -247,7 +257,7 @@ class _WalletState extends State<Wallet> {
               child: Text(
                 balance,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 20.0),
+                style: TextStyle(fontSize: 20.0, color: Colors.black),
               ),
             ),
             SizedBox(width: 40),
@@ -384,9 +394,15 @@ class _WalletState extends State<Wallet> {
         // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-              child: Column(
-               children: assetList
-          ))
+            child: Column(
+              children: [
+                assetsCard('images/algorand-algo-logo.png', 'ALGO', algoBalance,
+                    user.wallets["ALGO"]!["address"]!),
+                assetsCard('images/algorand-algo-logo.png', 'ETH', etherBalance,
+                    ethadd)
+              ],
+            ),
+          ),
         ],
       ),
     );

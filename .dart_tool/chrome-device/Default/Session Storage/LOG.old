@@ -1,4 +1,2 @@
-2021/12/06-13:35:11.475 2508 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.d307136a\flutter_tools_chrome_device.7eca0400\Default\Session Storage/MANIFEST-000001
-2021/12/06-13:35:11.480 2508 Recovering log #4
-2021/12/06-13:35:11.484 2508 Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.d307136a\flutter_tools_chrome_device.7eca0400\Default\Session Storage/000004.log 
-2021/12/06-13:35:11.488 2508 Delete type=0 #3
+2021/12/07-19:57:56.776 2e4 Creating DB C:\Users\esdra\AppData\Local\Temp\flutter_tools.474b1c0d\flutter_tools_chrome_device.83b19823\Default\Session Storage since it was missing.
+2021/12/07-19:57:56.996 2e4 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.474b1c0d\flutter_tools_chrome_device.83b19823\Default\Session Storage/MANIFEST-000001
