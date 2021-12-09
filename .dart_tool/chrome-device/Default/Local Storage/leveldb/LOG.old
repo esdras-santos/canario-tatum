@@ -1,2 +1,17 @@
-2021/12/07-19:57:53.760 2e4 Creating DB C:\Users\esdra\AppData\Local\Temp\flutter_tools.474b1c0d\flutter_tools_chrome_device.83b19823\Default\Local Storage\leveldb since it was missing.
-2021/12/07-19:57:54.670 2e4 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.474b1c0d\flutter_tools_chrome_device.83b19823\Default\Local Storage\leveldb/MANIFEST-000001
+2021/12/07-20:23:36.985 2c10 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.9353e1fc\flutter_tools_chrome_device.c47dfd12\Default\Local Storage\leveldb/MANIFEST-000001
+2021/12/07-20:23:37.062 2c10 Recovering log #3
+2021/12/07-20:23:37.066 2c10 Level-0 table #3: started
+2021/12/07-20:23:37.100 2c10 Level-0 table #3: 765 bytes OK
+2021/12/07-20:23:37.102 2c10 Recovering log #4
+2021/12/07-20:23:37.103 2c10 Level-0 table #4: started
+2021/12/07-20:23:37.122 2c10 Level-0 table #4: 11313 bytes OK
+2021/12/07-20:23:37.127 2c10 Recovering log #7
+2021/12/07-20:23:37.128 2c10 Level-0 table #5: started
+2021/12/07-20:23:37.152 2c10 Level-0 table #5: 9317 bytes OK
+2021/12/07-20:23:37.155 2c10 Recovering log #10
+2021/12/07-20:23:37.167 2c10 Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.9353e1fc\flutter_tools_chrome_device.c47dfd12\Default\Local Storage\leveldb/000010.log 
+2021/12/07-20:23:37.247 2c10 Delete type=0 #3
+2021/12/07-20:23:37.247 2c10 Delete type=0 #4
+2021/12/07-20:23:37.247 2c10 Delete type=0 #7
+2021/12/07-20:23:37.256 2c10 Delete type=2 #8
+2021/12/07-20:23:37.256 2c10 Delete type=2 #11

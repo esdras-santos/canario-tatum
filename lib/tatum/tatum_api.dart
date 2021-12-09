@@ -17,8 +17,8 @@ class Tatum {
 
   Future<Map<String, dynamic>> generateEtherWallet() async {
     var url = Uri.https("api-eu1.tatum.io", "v3/ethereum/wallet");
-    var response = await http
-        .get(url, headers: {"x-testnet-type": "rinkeby", "x-api-key": apikey});
+    var response = await http.get(url,
+        headers: {"x-testnet-type": "ethereum-rinkeby", "x-api-key": apikey});
     if (response.statusCode == 200) {
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
@@ -28,7 +28,19 @@ class Tatum {
     return {};
   }
 
+  Future<Map<String, dynamic>> generateEtherDepositAddress(
+      String xpub, index) async {
+    var url = Uri.https("api-eu1.tatum.io", "v3/ethereum/address/$xpub/$index");
+    var response = await http.get(url,
+        headers: {"x-testnet-type": "ethereum-rinkeby", "x-api-key": apikey});
+    if (response.statusCode == 200) {
+      var jsonResponse =
+          convert.jsonDecode(response.body) as Map<String, dynamic>;
 
+      return jsonResponse;
+    }
+    return {};
+  }
 
   Future<Map> generateEtherAddress(String xpub, index) async {
     var url =
@@ -40,23 +52,22 @@ class Tatum {
     return jsonResponse;
   }
 
-  Future<int> getBalance(String address) async {
+  Future<num> getBalance(String address) async {
     var url =
         Uri.https("api-eu1.tatum.io", "v3/algorand/account/balance/${address}");
-    
+
     var response = await http.get(url, headers: {"x-api-key": apikey});
-    
-    var jsonResponse = convert.jsonDecode(response.body) as int;
-    
+
+    var jsonResponse = convert.jsonDecode(response.body) as num;
+
     return jsonResponse;
   }
 
   Future<int> getEtherBalance(String address) async {
     var url =
         Uri.https("api-eu1.tatum.io", "v3/ethereum/account/balance/${address}");
-    var response = await http
-        .get(url, headers: {"x-testnet-type": "rinkeby", "x-api-key": apikey});
-    print("\n\n${response.body}\n\n");
+    var response = await http.get(url,
+        headers: {"x-testnet-type": "ethereum-rinkeby", "x-api-key": apikey});
 
     var jsonResponse = convert.jsonDecode(response.body) as Map;
     return int.parse(jsonResponse["balance"]);
@@ -89,7 +100,7 @@ class Tatum {
 
     Map<String, String> headers = {
       "content-type": "application/json",
-      "x-testnet-type": "rinkeby",
+      "x-testnet-type": "ethereum-rinkeby",
       "x-api-key": apikey
     };
 
@@ -135,6 +146,7 @@ class Tatum {
       "customer": {"externalId": externalId}
     });
     var response = await http.post(url, body: body, headers: headers);
+    print(response.body);
     var jsonResponse = convert.jsonDecode(response.body) as Map;
     return jsonResponse;
   }
@@ -144,6 +156,7 @@ class Tatum {
     var url = Uri.https("api-eu1.tatum.io", "v3/ledger/account");
     Map<String, String> headers = {
       "content-type": "application/json",
+      "x-testnet-type": "ethereum-rinkeby",
       "x-api-key": apikey
     };
     final body = convert.jsonEncode({
@@ -153,19 +166,21 @@ class Tatum {
       "customer": {"externalId": externalId}
     });
     var response = await http.post(url, body: body, headers: headers);
+    print(response.body);
     var jsonResponse = convert.jsonDecode(response.body) as Map;
     return jsonResponse;
   }
 
-  Future<Map<dynamic, dynamic>> accountsWithBalances(String id) async {
-    var url = Uri.https("api-eu1.tatum.io", "v3/ledger/account/customer/${id}");
-    var response = await http.get(url, headers: {"x-api-key": apikey});
-    if (response.statusCode == 200) {
-      var jsonResponse =
-          convert.jsonDecode(response.body) as Map<dynamic, dynamic>;
-      return jsonResponse;
-    }
-    return {"fail": 0};
+  Future<List<dynamic>> accountsWithBalances(String id) async {
+    var url = Uri.https("api-eu1.tatum.io",
+        "v3/ledger/account/customer/$id", {"pageSize":"50", "count": "true"});
+    var response = await http.get(url, headers: {"x-api-key": apikey, "Content-Type": "application/json"});
+    
+    
+    var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
+    return jsonResponse;
+    
+    
   }
 
   Future<Map> trade(
@@ -185,6 +200,20 @@ class Tatum {
     });
     var response = await http.post(url, body: body, headers: headers);
     var jsonResponse = convert.jsonDecode(response.body) as Map;
+    print(response.body);
+    return jsonResponse;
+  }
+
+  Future<List<Map>> chart(String pair, from, to, timeFrame) async {
+    var url = Uri.https("api-eu1.tatum.io", "v3/trade/chart");
+    Map<String, String> headers = {
+      "content-type": "application/json",
+      "x-api-key": apikey
+    };
+    final body = convert.jsonEncode(
+        {"pair": pair, "from": from, "to": to, "timeFrame": timeFrame});
+    var response = await http.post(url, body: body, headers: headers);
+    var jsonResponse = convert.jsonDecode(response.body) as List<Map>;
     return jsonResponse;
   }
 

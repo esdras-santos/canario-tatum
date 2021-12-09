@@ -13,7 +13,7 @@ class _WalletState extends State<Wallet> {
   var address = " ";
   var amount = " ";
   List<Widget> assetList = [];
-  User user = User();
+  UserTemp user = UserTemp();
   var etherBalance = " ";
   var algoBalance = " ";
   var ethadd = " ";
@@ -253,6 +253,7 @@ class _WalletState extends State<Wallet> {
               ),
             ),
             SizedBox(width: 40),
+            Text("balance: ", style: TextStyle(fontSize: 16)),
             Material(
               child: Text(
                 balance,

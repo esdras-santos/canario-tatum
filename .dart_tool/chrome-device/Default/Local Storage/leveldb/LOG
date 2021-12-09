@@ -1,17 +1,22 @@
-2021/12/07-20:23:36.985 2c10 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.9353e1fc\flutter_tools_chrome_device.c47dfd12\Default\Local Storage\leveldb/MANIFEST-000001
-2021/12/07-20:23:37.062 2c10 Recovering log #3
-2021/12/07-20:23:37.066 2c10 Level-0 table #3: started
-2021/12/07-20:23:37.100 2c10 Level-0 table #3: 765 bytes OK
-2021/12/07-20:23:37.102 2c10 Recovering log #4
-2021/12/07-20:23:37.103 2c10 Level-0 table #4: started
-2021/12/07-20:23:37.122 2c10 Level-0 table #4: 11313 bytes OK
-2021/12/07-20:23:37.127 2c10 Recovering log #7
-2021/12/07-20:23:37.128 2c10 Level-0 table #5: started
-2021/12/07-20:23:37.152 2c10 Level-0 table #5: 9317 bytes OK
-2021/12/07-20:23:37.155 2c10 Recovering log #10
-2021/12/07-20:23:37.167 2c10 Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.9353e1fc\flutter_tools_chrome_device.c47dfd12\Default\Local Storage\leveldb/000010.log 
-2021/12/07-20:23:37.247 2c10 Delete type=0 #3
-2021/12/07-20:23:37.247 2c10 Delete type=0 #4
-2021/12/07-20:23:37.247 2c10 Delete type=0 #7
-2021/12/07-20:23:37.256 2c10 Delete type=2 #8
-2021/12/07-20:23:37.256 2c10 Delete type=2 #11
+2021/12/08-07:51:02.267 25d8 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.6e3b0045\flutter_tools_chrome_device.ede9503d\Default\Local Storage\leveldb/MANIFEST-000001
+2021/12/08-07:51:02.277 25d8 Recovering log #10
+2021/12/08-07:51:02.293 25d8 Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.6e3b0045\flutter_tools_chrome_device.ede9503d\Default\Local Storage\leveldb/000010.log 
+2021/12/08-07:51:02.298 25d8 Delete type=0 #3
+2021/12/08-07:51:02.299 25d8 Delete type=0 #4
+2021/12/08-07:51:02.299 25d8 Delete type=0 #7
+2021/12/08-07:51:02.299 25d8 Delete type=2 #8
+2021/12/08-07:51:02.299 25d8 Delete type=2 #11
+2021/12/08-16:28:16.840 173c Level-0 table #13: started
+2021/12/08-16:28:16.854 173c Level-0 table #13: 17381 bytes OK
+2021/12/08-16:28:16.862 173c Delete type=0 #10
+2021/12/08-16:28:16.867 173c Compacting 4@0 + 0@1 files
+2021/12/08-16:28:16.877 173c Generated table #14@0: 93 keys, 5130 bytes
+2021/12/08-16:28:16.877 173c Compacted 4@0 + 0@1 files => 5130 bytes
+2021/12/08-16:28:16.879 173c compacted to: files[ 0 1 0 0 0 0 0 ]
+2021/12/08-16:28:16.886 173c Delete type=2 #3
+2021/12/08-16:28:16.886 173c Delete type=2 #4
+2021/12/08-16:28:16.887 173c Delete type=2 #5
+2021/12/08-16:28:16.887 173c Delete type=2 #13
+2021/12/08-16:57:40.313 173c Level-0 table #16: started
+2021/12/08-16:57:40.335 173c Level-0 table #16: 41890 bytes OK
+2021/12/08-16:57:40.345 173c Delete type=0 #12

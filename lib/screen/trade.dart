@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:convert';
 import 'package:canarioswap/tatum/tatum_api.dart';
 import 'wallet.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Trade extends StatefulWidget {
   const Trade({Key? key}) : super(key: key);
@@ -14,6 +15,9 @@ class Trade extends StatefulWidget {
 }
 
 class _TradeState extends State<Trade> {
+  final auth = FirebaseAuth.instance;
+  String useremail = " ";
+
   // buy button state
   var buyCollor = Colors.green[600];
   var buyLetter = Colors.white;
@@ -23,7 +27,7 @@ class _TradeState extends State<Trade> {
 
   var decisionButtonCollor = Colors.green[600];
   var decisionButtonLetter = Colors.white;
-  var decisionText = "buy ";
+  var decisionText = "buy";
 
   void setButton(String button, currency) {
     if (button == "buy") {
@@ -36,7 +40,7 @@ class _TradeState extends State<Trade> {
 
         decisionButtonCollor = Colors.green[600];
         decisionButtonLetter = Colors.white;
-        decisionText = "buy ";
+        decisionText = "buy";
       });
     } else {
       setState(() {
@@ -48,7 +52,7 @@ class _TradeState extends State<Trade> {
 
         decisionButtonCollor = Colors.orange[600];
         decisionButtonLetter = Colors.white;
-        decisionText = "sell ";
+        decisionText = "sell";
       });
     }
   }
@@ -62,26 +66,26 @@ class _TradeState extends State<Trade> {
   List<ListTile> myOrdersAmount = [];
   List<ListTile> myPairs = [];
   String currency1 = 'ALGO';
-  String currency2 = 'BTC';
+  String currency2 = 'ETH';
 
-  late List<ChartData> _chartData;
+  List<ChartData> _chartData = [];
   late TrackballBehavior _trackballBehavior;
 
   String amount = " ";
   String price = " ";
-  User user = User();
+  UserTemp user = UserTemp();
   Tatum api = Tatum();
 
   @override
   void initState() {
-    _chartData = getChartData();
+    super.initState();
+    useremail = auth.currentUser!.email!;
+    getChartData().then((value) => _chartData = value);
     _trackballBehavior = TrackballBehavior(
         enable: true, activationMode: ActivationMode.singleTap);
     priceAmountList('buy');
     priceAmountList('sell');
     myOrdersList("id");
-
-    super.initState();
   }
 
   void myOrdersList(String id) async {
@@ -294,6 +298,7 @@ class _TradeState extends State<Trade> {
                   priceAmountList('sell');
                 },
               ),
+              Text(useremail),
             ]),
             Row(
               children: [
@@ -615,21 +620,29 @@ class _TradeState extends State<Trade> {
             SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(primary: decisionButtonCollor),
-              onPressed: () async {
+              onPressed: () {
                 String id1 = ' ';
                 String id2 = ' ';
                 for (Map acc in user.accounts) {
                   if (acc["currency"] == currency1) {
-                    id1 = acc["id"];
+                    id1 = acc["customerId"];
                   }
                   if (acc["currency"] == currency2) {
-                    id2 = acc["id"];
+                    id2 = acc["customerId"];
                   }
                 }
-                await api.trade(id1, id2, price, amount, currency1+"/"+currency2,decisionText.toUpperCase());
+                api
+                    .trade(id1, id2, price, amount, currency1 + "/" + currency2,
+                        decisionText.toUpperCase())
+                    .then((value) {
+                  setState(() {
+                    price = " ";
+                    amount = " ";
+                  });
+                });
               },
               child: Text(
-                decisionText + currency1,
+                decisionText + " " + currency1,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -642,121 +655,24 @@ class _TradeState extends State<Trade> {
     );
   }
 
-  List<ChartData> getChartData() {
-    return <ChartData>[
-      ChartData(
-        x: DateTime(2021, 12, 05),
-        open: 115.8,
-        high: 117.5,
-        low: 105.59,
-        close: 116.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 06),
-        open: 110.8,
-        high: 118.5,
-        low: 109.59,
-        close: 116.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 07),
-        open: 111.8,
-        high: 112.5,
-        low: 105.59,
-        close: 146.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 08),
-        open: 175.8,
-        high: 187.5,
-        low: 175.59,
-        close: 156.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 09),
-        open: 115.8,
-        high: 97.5,
-        low: 95.59,
-        close: 116.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 10),
-        open: 110.8,
-        high: 95.5,
-        low: 90.59,
-        close: 116.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 10),
-        open: 111.8,
-        high: 90.5,
-        low: 85.59,
-        close: 146.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 10),
-        open: 175.8,
-        high: 187.5,
-        low: 175.59,
-        close: 156.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 11),
-        open: 115.8,
-        high: 117.5,
-        low: 105.59,
-        close: 116.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 12),
-        open: 110.8,
-        high: 118.5,
-        low: 109.59,
-        close: 116.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 13),
-        open: 111.8,
-        high: 112.5,
-        low: 105.59,
-        close: 146.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 14),
-        open: 175.8,
-        high: 187.5,
-        low: 175.59,
-        close: 156.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 15),
-        open: 115.8,
-        high: 97.5,
-        low: 95.59,
-        close: 116.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 16),
-        open: 110.8,
-        high: 95.5,
-        low: 90.59,
-        close: 116.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 17),
-        open: 111.8,
-        high: 90.5,
-        low: 85.59,
-        close: 146.52,
-      ),
-      ChartData(
-        x: DateTime(2021, 12, 18),
-        open: 175.8,
-        high: 187.5,
-        low: 175.59,
-        close: 156.52,
-      ),
-    ];
+  Future<List<ChartData>> getChartData() async {
+    DateTime now = DateTime.now();
+    var date = DateTime.utc(now.year, now.month, now.day);
+    List<ChartData> chartList = [];
+    var charts = await api.chart(currency1 + "/" + currency2,
+        date.millisecondsSinceEpoch, date.millisecondsSinceEpoch, "DAY");
+    for (Map d in charts) {
+      chartList.add(
+        ChartData(
+            x: d["timestamp"],
+            high: d["high"],
+            low: d["low"],
+            open: d["open"],
+            close: d["close"]),
+      );
+    }
+
+    return chartList;
   }
 }
 

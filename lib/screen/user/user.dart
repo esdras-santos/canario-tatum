@@ -3,20 +3,25 @@ import 'package:bip39/bip39.dart' as bip39;
 import 'dart:convert';
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:hex/hex.dart';
+
 import 'package:crypto/crypto.dart';
 
 import 'package:canarioswap/tatum/tatum_api.dart';
 
-class User {
-  User._privateConstructor();
-  static final User _user = User._privateConstructor();
+class UserTemp {
+  UserTemp._privateConstructor();
+  static final UserTemp _user = UserTemp._privateConstructor();
   String mnemonic = " ";
   String externalId = " ";
   List<Map> accounts = [];
+  Map accTest = {};
   Tatum api = Tatum();
-  Map<String, Map<String, dynamic>> wallets = {};
+  Map<String, Map<String, dynamic>> wallets = {
+    "ALGO": {"secret": " ", "address": " "},
+    "ETH": {"mnemonic": " ", "xpub": " "},
+  };
 
-  factory User() {
+  factory UserTemp() {
     return _user;
   }
 
@@ -31,30 +36,38 @@ class User {
     return mnemonic;
   }
 
-  void setExternalId(String _username, _password) async {
+  Future<void> setNewUser(String _username, _password) async {
     List<int> bytes = utf8.encode(_username + _password);
     externalId = sha256.convert(bytes).toString();
-    var acc = await api.accountsWithBalances(externalId);
 
-    // ignore: unnecessary_null_comparison
-    if (false) {
-      // this information need to be taken from firebase
+    wallets["ALGO"] = await api.generateWallet();
+    accounts.add(await api.generateUserAccount(
+        externalId, wallets["ALGO"]!["address"], "ALGO"));
 
-      wallets["ALGO"] = await api.generateWallet();
-      wallets["ETH"] = await api.generateEtherWallet();
-    } else {
-      wallets["ALGO"] = await api.generateWallet();
-      accounts.add(await api.generateUserAccount(
-          externalId, wallets["ALGO"]!["address"], "ALGO"));
+    wallets["ETH"] = await api.generateEtherWallet();
 
-      wallets["ETH"] = await api.generateEtherWallet();
+    accounts.add(await api.generateEtherUserAccount(
+        externalId, wallets["ETH"]!["xpub"], "ETH"));
 
-      accounts.add(await api.generateEtherUserAccount(
-          externalId, wallets["ETH"]!["xpub"], "ETH"));
+    var balance = await api.getBalance(wallets["ALGO"]!["address"]);
+  }
 
-      var balance = await api.getBalance(wallets["ALGO"]!["address"]);
-      print(balance);
-    }
+  Future<void> initWallet(String secret, address, mnemonic, xpub) async {
+    wallets["ALGO"]!["secret"] = secret;
+    wallets["ALGO"]!["address"] = address;
+    wallets["ETH"]!["mnemonic"] = mnemonic;
+    wallets["ETH"]!["xpub"] = xpub;
+    accounts.add(await api.generateUserAccount(
+        externalId, wallets["ALGO"]!["address"], "ALGO"));
+    print(accounts[0]["customerId"]);
+    accounts.add(await api.generateEtherUserAccount(
+        externalId, wallets["ETH"]!["xpub"], "ETH"));
+    print(accounts[1]["customerId"]);
+  }
+
+  void setExternalId(String _username, _password) {
+    List<int> bytes = utf8.encode(_username + _password);
+    externalId = sha256.convert(bytes).toString();
   }
 
   void withdraw(String coin, to, amount) async {
@@ -66,8 +79,8 @@ class User {
     }
   }
 
-  Future<int> balance(String coin) async {
-    int value;
+  Future<num> balance(String coin) async {
+    num value;
     if (coin == "eth") {
       var ethAddress =
           await api.generateEtherAddress(wallets["ETH"]!["xpub"]!, "0");
