@@ -28,11 +28,9 @@ class Tatum {
     return {};
   }
 
-  Future<Map<String, dynamic>> generateEtherDepositAddress(
-      String xpub, index) async {
-    var url = Uri.https("api-eu1.tatum.io", "v3/ethereum/address/$xpub/$index");
-    var response = await http.get(url,
-        headers: {"x-testnet-type": "ethereum-rinkeby", "x-api-key": apikey});
+  Future<Map<String, dynamic>> generateEtherDepositAddress(String id) async {
+    var url = Uri.https("api-eu1.tatum.io", "v3/offchain/account/$id/address/0");
+    var response = await http.post(url, headers: {"x-api-key": apikey});
     if (response.statusCode == 200) {
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
@@ -65,9 +63,10 @@ class Tatum {
 
   Future<int> getEtherBalance(String address) async {
     var url =
-        Uri.https("api-eu1.tatum.io", "v3/ethereum/account/balance/${address}");
+        Uri.https("api-eu1.tatum.io", "v3/ethereum/account/balance/$address");
     var response = await http.get(url,
         headers: {"x-testnet-type": "ethereum-rinkeby", "x-api-key": apikey});
+    print("\n\n ${response.body}\n\n");
 
     var jsonResponse = convert.jsonDecode(response.body) as Map;
     return int.parse(jsonResponse["balance"]);
@@ -133,7 +132,7 @@ class Tatum {
     return jsonResponse;
   }
 
-  Future<Map> generateUserAccount(String externalId, address, currency) async {
+  Future<Map> generateUserAccount(String externalId, currency) async {
     var url = Uri.https("api-eu1.tatum.io", "v3/ledger/account");
     Map<String, String> headers = {
       "content-type": "application/json",
@@ -141,7 +140,6 @@ class Tatum {
     };
     final body = convert.jsonEncode({
       "currency": currency,
-      "address": address,
       "accountingCurrency": "USD",
       "customer": {"externalId": externalId}
     });
@@ -172,15 +170,13 @@ class Tatum {
   }
 
   Future<List<dynamic>> accountsWithBalances(String id) async {
-    var url = Uri.https("api-eu1.tatum.io",
-        "v3/ledger/account/customer/$id", {"pageSize":"50", "count": "true"});
-    var response = await http.get(url, headers: {"x-api-key": apikey, "Content-Type": "application/json"});
-    
-    
+    var url = Uri.https("api-eu1.tatum.io", "v3/ledger/account/customer/$id",
+        {"pageSize": "50", "count": "true"});
+    var response = await http.get(url,
+        headers: {"x-api-key": apikey, "Content-Type": "application/json"});
+
     var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
     return jsonResponse;
-    
-    
   }
 
   Future<Map> trade(
@@ -199,8 +195,29 @@ class Tatum {
       "currency2AccountId": currency2Id,
     });
     var response = await http.post(url, body: body, headers: headers);
+    print("\n\n ${response.body}\n\n");
     var jsonResponse = convert.jsonDecode(response.body) as Map;
-    print(response.body);
+
+    return jsonResponse;
+  }
+
+  Future<Map> withdraw(
+      String said, addr, amount, fee) async {
+    var url = Uri.https("api-eu1.tatum.io", "/v3/offchain/withdrawal");
+    Map<String, String> headers = {
+      "content-type": "application/json",
+      "x-api-key": apikey
+    };
+    final body = convert.jsonEncode({
+      "senderAccountId": said,
+      "address": addr,
+      "amount": amount,
+      "fee": fee,
+    });
+    var response = await http.post(url, body: body, headers: headers);
+    print("\n\n ${response.body}\n\n");
+    var jsonResponse = convert.jsonDecode(response.body) as Map;
+
     return jsonResponse;
   }
 
@@ -218,7 +235,8 @@ class Tatum {
   }
 
   Future<List<Map>> openTrades(String type) async {
-    var url = Uri.https("api-eu1.tatum.io", "/v3/trade/${type}?pageSize=10");
+    var url =
+        Uri.https("api-eu1.tatum.io", "/v3/trade/${type}", {"pageSize": "10"});
     var response = await http.get(url, headers: {"x-api-key": apikey});
 
     var jsonResponse = convert.jsonDecode(response.body) as List<Map>;
@@ -238,6 +256,41 @@ class Tatum {
     var response = await http.get(url, headers: {"x-api-key": apikey});
 
     var jsonResponse = convert.jsonDecode(response.body) as List<Map>;
+    return jsonResponse;
+  }
+
+  Future<Map> assignAddress(String id, address) async {
+    var url = Uri.https("api-eu1.tatum.io",
+        "v3/offchain/account/$id/address/$address", {"index": "1"});
+    Map<String, String> headers = {
+      "content-type": "application/json",
+      "x-api-key": apikey
+    };
+
+    var response = await http.post(url, headers: headers);
+    print("\n\n${response.body}\n\n");
+    var jsonResponse = convert.jsonDecode(response.body) as Map;
+    return jsonResponse;
+  }
+
+  Future<Map> estimateEtherFee(
+      String from, to, amount) async {
+    var url = Uri.https("api-eu1.tatum.io", "/v3/ethereum/gas");
+    Map<String, String> headers = {
+      "content-type": "application/json",
+      "x-testnet-type": "ethereum-ropsten",
+      "x-api-key": apikey
+    };
+    final body = convert.jsonEncode({
+      "from": from,
+      "to": to,
+      "amount": amount,
+      
+    });
+    var response = await http.post(url, body: body, headers: headers);
+    print("\n\n ${response.body}\n\n");
+    var jsonResponse = convert.jsonDecode(response.body) as Map;
+
     return jsonResponse;
   }
 }

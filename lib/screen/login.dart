@@ -48,6 +48,7 @@ class _LoginState extends State<Login> {
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
         colors: [
+          Colors.green,
           Colors.yellow,
           Colors.green,
         ],
@@ -222,24 +223,12 @@ class _LoginState extends State<Login> {
                                           email: email, password: password)
                                       .then((value) {
                                     UserCredential userCredential = value;
-                                    var e = FirebaseAuth
-                                        .instance.currentUser!.email!;
-                                    u.setExternalId(email, password);
-
-                                    wallets.where(e).get().then((value) {
-                                      var json = convert.jsonEncode(
-                                          value.docs.asMap()[0]!.data());
-                                      var wallet =
-                                          convert.jsonDecode(json) as Map;
-                                      u.initWallet(wallet[e]["secretAlgo"], wallet[e]["addressAlgo"], wallet[e]["mnemonicEth"], wallet[e]["xpubEth"]).then((_){
-                                        Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Trade()),
-                                        );
-                                      });
-                                      
-                                    });
+                                    Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Trade()),
+                                    );
+                                    
 
                                   });
                                 } on FirebaseAuthException catch (e) {
@@ -597,8 +586,8 @@ class _LoginState extends State<Login> {
                                     UserCredential userCredential = value;
                                     var e = FirebaseAuth
                                         .instance.currentUser!.email!;
-
-                                    u.setNewUser(email, password).then((_) {
+                                    u.setExternalId(email);
+                                    u.setNewUser().then((_) {
                                       wallets.add({
                                         "$e": {
                                           "secretAlgo":
@@ -608,8 +597,10 @@ class _LoginState extends State<Login> {
                                           "mnemonicEth":
                                               u.wallets["ETH"]!["mnemonic"]!,
                                           "xpubEth": u.wallets["ETH"]!["xpub"]!,
+                                          "customerId": u.customerId,
                                         }
                                       }).then((_) {
+                                        
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(

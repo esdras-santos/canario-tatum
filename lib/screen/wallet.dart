@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:isolate';
 
+import 'login.dart';
 import 'trade.dart';
 import 'user/user.dart';
 
@@ -17,10 +20,10 @@ class _WalletState extends State<Wallet> {
   var etherBalance = " ";
   var algoBalance = " ";
   var ethadd = " ";
+  final auth = FirebaseAuth.instance;
 
   @override
   void initState() {
-    
     super.initState();
     // this asset list need to be populated with the api data
     user.balance("eth").then((value) {
@@ -38,10 +41,21 @@ class _WalletState extends State<Wallet> {
         ethadd = value;
       });
     });
-
+    updateBalances();
   }
 
-  
+  //update the balances in each 3 seonds
+  Future updateBalances() async {
+    while (true) {
+      await Future.delayed(const Duration(seconds: 3));
+      var value = await user.getAccounts(user.accounts[0]["customerId"]);
+      
+      setState(() {
+        algoBalance = value[0]["balance"]["availableBalance"];
+        etherBalance = value[1]["balance"]["availableBalance"];
+      });
+    }
+  }
 
   Widget shader(String text, TextStyle style) {
     return ShaderMask(
@@ -50,6 +64,7 @@ class _WalletState extends State<Wallet> {
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
         colors: [
+          Colors.green,
           Colors.yellow,
           Colors.green,
         ],
@@ -124,12 +139,23 @@ class _WalletState extends State<Wallet> {
             ),
             actions: [
               ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.yellow[600]),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.yellow[600],
+                ),
                 onPressed: () {
                   if (coin == "ETH") {
-                    user.withdraw('eth', address, amount);
+                    //calculate fee
+                    user.getFee(ethadd, address, amount).then((value) {
+                      user
+                          .withdraw(
+                              user.accounts[1]["id"], address, amount, value)
+                          .then((_) => Navigator.pop(context));
+                    });
                   } else {
-                    user.withdraw('algo', address, amount);
+                    user
+                        .withdraw(
+                            user.accounts[0]["id"], address, amount, "0.001")
+                        .then((_) => Navigator.pop(context));
                   }
                 },
                 child: Text(
@@ -232,16 +258,19 @@ class _WalletState extends State<Wallet> {
         width: 700.0,
         height: 100.0,
         child: Row(
-          
           children: <Widget>[
             SizedBox(width: 40),
             Container(
-                width: 50.0,
-                height: 50.0,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: AssetImage(iconPath), fit: BoxFit.fill,),),),
+              width: 50.0,
+              height: 50.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage(iconPath),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
             SizedBox(
               width: 19.0,
             ),
@@ -308,6 +337,31 @@ class _WalletState extends State<Wallet> {
             "Canario",
             TextStyle(fontWeight: FontWeight.bold),
           ),
+          leading: Padding(
+              padding: EdgeInsets.only(right: 10.0),
+              child: PopupMenuButton(
+                  itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("LogOut"),
+                                Icon(
+                                  Icons.logout,
+                                  color: Colors.green,
+                                )
+                              ]),
+                          onTap: () {
+                            auth.signOut()
+                            .then((_) => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Login()),
+                                ));
+                          },
+                        ),
+                      ],
+                  child: Icon(Icons.menu, color: Colors.green))),
           actions: <Widget>[
             Padding(
               padding: EdgeInsets.only(right: 20, top: 5, bottom: 5),
@@ -409,5 +463,3 @@ class _WalletState extends State<Wallet> {
     );
   }
 }
-
-class WalletCard {}

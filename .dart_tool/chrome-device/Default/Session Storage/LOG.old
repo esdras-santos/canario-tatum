@@ -1,8 +1,7 @@
-2021/12/07-20:23:40.285 2c10 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.9353e1fc\flutter_tools_chrome_device.c47dfd12\Default\Session Storage/MANIFEST-000001
-2021/12/07-20:23:40.296 2c10 Recovering log #3
-2021/12/07-20:23:40.297 2c10 Level-0 table #3: started
-2021/12/07-20:23:40.382 2c10 Level-0 table #3: 855 bytes OK
-2021/12/07-20:23:40.384 2c10 Recovering log #4
-2021/12/07-20:23:40.412 2c10 Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.9353e1fc\flutter_tools_chrome_device.c47dfd12\Default\Session Storage/000004.log 
-2021/12/07-20:23:40.513 2c10 Delete type=0 #3
-2021/12/07-20:23:40.514 2c10 Delete type=2 #5
+2021/12/11-17:55:40.861 2408 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.d9e26b25\flutter_tools_chrome_device.2f98761b\Default\Session Storage/MANIFEST-000001
+2021/12/11-17:55:40.871 2408 Recovering log #9
+2021/12/11-17:55:40.876 2408 Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.d9e26b25\flutter_tools_chrome_device.2f98761b\Default\Session Storage/000009.log 
+2021/12/11-17:55:40.880 2408 Delete type=0 #3
+2021/12/11-17:55:40.880 2408 Delete type=0 #4
+2021/12/11-17:55:40.881 2408 Delete type=2 #5
+2021/12/11-17:55:40.881 2408 Delete type=0 #6

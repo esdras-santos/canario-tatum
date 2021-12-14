@@ -1,7 +1,4 @@
-2021/12/07-20:23:34.301 1da0 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.9353e1fc\flutter_tools_chrome_device.c47dfd12\Default\Site Characteristics Database/MANIFEST-000001
-2021/12/07-20:23:34.434 1da0 Recovering log #3
-2021/12/07-20:23:34.434 1da0 Level-0 table #6: started
-2021/12/07-20:23:35.103 1da0 Level-0 table #6: 1821 bytes OK
-2021/12/07-20:23:35.112 1da0 Recovering log #6
-2021/12/07-20:23:35.114 1da0 Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.9353e1fc\flutter_tools_chrome_device.c47dfd12\Default\Site Characteristics Database/000006.log 
-2021/12/07-20:23:35.146 1da0 Delete type=0 #3
+2021/12/11-17:55:37.835 544 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.d9e26b25\flutter_tools_chrome_device.2f98761b\Default\Site Characteristics Database/MANIFEST-000001
+2021/12/11-17:55:37.839 544 Recovering log #6
+2021/12/11-17:55:37.840 544 Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.d9e26b25\flutter_tools_chrome_device.2f98761b\Default\Site Characteristics Database/000006.log 
+2021/12/11-17:55:37.842 544 Delete type=0 #3

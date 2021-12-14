@@ -2,10 +2,12 @@ import 'package:canarioswap/screen/user/user.dart';
 import 'package:flutter/material.dart';
 import 'dart:js' as js;
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'dart:convert';
+import 'dart:convert' as convert;
 import 'package:canarioswap/tatum/tatum_api.dart';
+import 'login.dart';
 import 'wallet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Trade extends StatefulWidget {
   const Trade({Key? key}) : super(key: key);
@@ -16,6 +18,8 @@ class Trade extends StatefulWidget {
 
 class _TradeState extends State<Trade> {
   final auth = FirebaseAuth.instance;
+  CollectionReference wallets =
+      FirebaseFirestore.instance.collection('wallets');
   String useremail = " ";
 
   // buy button state
@@ -80,6 +84,18 @@ class _TradeState extends State<Trade> {
   void initState() {
     super.initState();
     useremail = auth.currentUser!.email!;
+    user.setExternalId(useremail);
+    wallets.where(useremail).get().then((value) {
+      var json = convert.jsonEncode(value.docs.asMap()[0]!.data());
+      var wallet = convert.jsonDecode(json) as Map;
+      user.initWallet(
+        wallet[useremail]["secretAlgo"],
+        wallet[useremail]["addressAlgo"],
+        wallet[useremail]["mnemonicEth"],
+        wallet[useremail]["xpubEth"],
+        wallet[useremail]["customerId"]);
+    });
+    
     getChartData().then((value) => _chartData = value);
     _trackballBehavior = TrackballBehavior(
         enable: true, activationMode: ActivationMode.singleTap);
@@ -173,6 +189,34 @@ class _TradeState extends State<Trade> {
               "Canario",
               TextStyle(fontWeight: FontWeight.bold),
             ),
+            leading: Padding(
+                padding: EdgeInsets.only(right: 10.0),
+                child: PopupMenuButton(
+                    itemBuilder: (context) => [
+                          PopupMenuItem(
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("LogOut"),
+                                  Icon(
+                                    Icons.logout,
+                                    color: Colors.green,
+                                  )
+                                ]),
+                            onTap: () {
+                              auth
+                                  .signOut()
+                                  .then((_) => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Login()),
+                                        )
+                                    );
+                            },
+                          ),
+                        ],
+                    child: Icon(Icons.menu, color: Colors.green))),
             actions: <Widget>[
               Padding(
                 padding: EdgeInsets.only(right: 20, top: 5, bottom: 5),
@@ -323,6 +367,7 @@ class _TradeState extends State<Trade> {
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
         colors: [
+          Colors.green,
           Colors.yellow,
           Colors.green,
         ],
@@ -501,6 +546,7 @@ class _TradeState extends State<Trade> {
   }
 
   Widget buyEndSellForm() {
+    var _controller = TextEditingController();
     return Container(
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -572,8 +618,11 @@ class _TradeState extends State<Trade> {
                   height: 50,
                   width: 270,
                   child: TextField(
+                    controller: _controller,
                     onChanged: (value) {
-                      price = value;
+                      setState(() {
+                        price = value.trim();
+                      });
                     },
                     textAlign: TextAlign.right,
                     decoration: const InputDecoration(
@@ -602,8 +651,11 @@ class _TradeState extends State<Trade> {
                   height: 50,
                   width: 270,
                   child: TextField(
+                    controller: _controller,
                     onChanged: (value) {
-                      amount = value;
+                      setState(() {
+                        amount = value.trim();
+                      });
                     },
                     textAlign: TextAlign.right,
                     decoration: const InputDecoration(
@@ -621,24 +673,15 @@ class _TradeState extends State<Trade> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(primary: decisionButtonCollor),
               onPressed: () {
-                String id1 = ' ';
-                String id2 = ' ';
-                for (Map acc in user.accounts) {
-                  if (acc["currency"] == currency1) {
-                    id1 = acc["customerId"];
-                  }
-                  if (acc["currency"] == currency2) {
-                    id2 = acc["customerId"];
-                  }
-                }
+                String id1 = user.accounts[0]["id"];
+                String id2 = user.accounts[1]["id"];
+                print("\n$price\n");
+                print("\n$currency2\n");
                 api
-                    .trade(id1, id2, price, amount, currency1 + "/" + currency2,
+                    .trade(id2, id1, price, amount, currency1 + "/" + currency2,
                         decisionText.toUpperCase())
                     .then((value) {
-                  setState(() {
-                    price = " ";
-                    amount = " ";
-                  });
+                  _controller.clear;
                 });
               },
               child: Text(

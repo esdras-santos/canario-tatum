@@ -2,6 +2,7 @@ import 'trade.dart';
 import 'wallet.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'login.dart';
 
@@ -13,6 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final auth = FirebaseAuth.instance;
   var amount = 0;
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class _HomeState extends State<Home> {
       ),
     );
     return Material(
-      child: Login(),
+      child: auth.currentUser != null ? Trade() : Login(),
       
     );
   }
