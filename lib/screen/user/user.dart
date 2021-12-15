@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:hex/hex.dart';
 
-
 import 'package:crypto/crypto.dart';
 import 'package:canarioswap/tatum/tatum_api.dart';
 
@@ -16,6 +15,8 @@ class UserTemp {
   List<Map> accounts = [];
   String customerId = " ";
   Tatum api = Tatum();
+  String email = " ";
+  String pass = " ";
   Map<String, Map<String, dynamic>> wallets = {
     "ALGO": {"secret": " ", "address": " "},
     "ETH": {"mnemonic": " ", "xpub": " "},
@@ -48,11 +49,10 @@ class UserTemp {
         externalId, wallets["ETH"]!["xpub"], "ETH"));
   }
 
-  Future<List> getAccounts(String id) async{
+  Future<List> getAccounts(String id) async {
     return await api.accountsWithBalances(id);
   }
 
-  
   Future<void> initWallet(
       String secret, address, mnemonic, xpub, customerid) async {
     wallets["ALGO"]!["secret"] = secret;
