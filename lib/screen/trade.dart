@@ -89,22 +89,36 @@ class _TradeState extends State<Trade> {
       var json = convert.jsonEncode(value.docs.asMap()[0]!.data());
       var wallet = convert.jsonDecode(json) as Map;
       user.initWallet(
-        wallet[useremail]["secretAlgo"],
-        wallet[useremail]["addressAlgo"],
-        wallet[useremail]["mnemonicEth"],
-        wallet[useremail]["xpubEth"],
-        wallet[useremail]["customerId"]);
+          wallet[useremail]["secretAlgo"],
+          wallet[useremail]["addressAlgo"],
+          wallet[useremail]["mnemonicEth"],
+          wallet[useremail]["xpubEth"],
+          wallet[useremail]["customerId"]);
     });
-    
+
     getChartData().then((value) => _chartData = value);
     _trackballBehavior = TrackballBehavior(
         enable: true, activationMode: ActivationMode.singleTap);
     priceAmountList('buy');
     priceAmountList('sell');
     myOrdersList("id");
+    updateTrades();
   }
 
-  void myOrdersList(String id) async {
+  Future updateTrades() async {
+    while (true) {
+      await Future.delayed(const Duration(seconds: 1));
+      await priceAmountList('buy');
+      await priceAmountList('sell');
+      await myOrdersList("id");
+      var value = await getChartData();
+      setState(() {
+        _chartData = value;
+      });
+    }
+  }
+
+  Future myOrdersList(String id) async {
     var jsonOrders = await api.myOpenTrades(id);
     setState(() {
       myOrdersPrice = [];
@@ -142,7 +156,7 @@ class _TradeState extends State<Trade> {
     });
   }
 
-  void priceAmountList(String type) async {
+  Future priceAmountList(String type) async {
     var jsonOrders = await api.openTrades(type);
     TextStyle style;
     setState(() {
@@ -205,14 +219,11 @@ class _TradeState extends State<Trade> {
                                   )
                                 ]),
                             onTap: () {
-                              auth
-                                  .signOut()
-                                  .then((_) => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Login()),
-                                        )
-                                    );
+                              auth.signOut().then((_) => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Login()),
+                                  ));
                             },
                           ),
                         ],
@@ -582,7 +593,7 @@ class _TradeState extends State<Trade> {
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        color: buyLetter),
+                        color: buyLetter,),
                   ),
                 ),
                 SizedBox(
@@ -673,12 +684,12 @@ class _TradeState extends State<Trade> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(primary: decisionButtonCollor),
               onPressed: () {
-                String id1 = user.accounts[0]["id"];
-                String id2 = user.accounts[1]["id"];
+                String id1 = user.accounts[user.coins[currency1]]["id"];
+                String id2 = user.accounts[user.coins[currency2]]["id"];
                 print("\n$price\n");
                 print("\n$currency2\n");
                 api
-                    .trade(id2, id1, price, amount, currency1 + "/" + currency2,
+                    .trade(id1, id2, price, amount, currency1 + "/" + currency2,
                         decisionText.toUpperCase())
                     .then((value) {
                   _controller.clear;

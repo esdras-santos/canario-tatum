@@ -29,8 +29,8 @@ class Tatum {
   }
 
   Future<Map<String, dynamic>> generateEtherDepositAddress(String id) async {
-    var url = Uri.https("api-eu1.tatum.io", "v3/offchain/account/$id/address/0");
-    var response = await http.post(url, headers: {"x-api-key": apikey});
+    var url = Uri.https("api-eu1.tatum.io", "v3/offchain/account/$id/address");
+    var response = await http.post(url, headers: {"content-type": "application/json", "x-api-key": apikey});
     if (response.statusCode == 200) {
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
@@ -221,7 +221,7 @@ class Tatum {
     return jsonResponse;
   }
 
-  Future<List<Map>> chart(String pair, from, to, timeFrame) async {
+  Future<List> chart(String pair, from, to, timeFrame) async {
     var url = Uri.https("api-eu1.tatum.io", "v3/trade/chart");
     Map<String, String> headers = {
       "content-type": "application/json",
@@ -230,7 +230,7 @@ class Tatum {
     final body = convert.jsonEncode(
         {"pair": pair, "from": from, "to": to, "timeFrame": timeFrame});
     var response = await http.post(url, body: body, headers: headers);
-    var jsonResponse = convert.jsonDecode(response.body) as List<Map>;
+    var jsonResponse = convert.jsonDecode(response.body) as List;
     return jsonResponse;
   }
 

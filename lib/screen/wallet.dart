@@ -251,7 +251,7 @@ class _WalletState extends State<Wallet> {
   }
 
   Widget assetsCard(
-      String iconPath, String symbol, String balance, String address) {
+      String iconPath, String symbol, String address) {
     return Card(
       elevation: 8.0,
       child: Container(
@@ -285,7 +285,7 @@ class _WalletState extends State<Wallet> {
             Text("balance: ", style: TextStyle(fontSize: 16)),
             Material(
               child: Text(
-                balance,
+                symbol == "ETH" ? etherBalance : algoBalance,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 20.0, color: Colors.black),
               ),
@@ -451,9 +451,9 @@ class _WalletState extends State<Wallet> {
           Center(
             child: Column(
               children: [
-                assetsCard('images/algorand-algo-logo.png', 'ALGO', algoBalance,
+                assetsCard('images/algologo.png', 'ALGO',
                     user.wallets["ALGO"]!["address"]!),
-                assetsCard('images/algorand-algo-logo.png', 'ETH', etherBalance,
+                assetsCard('images/ethlogo.png', 'ETH',
                     ethadd)
               ],
             ),

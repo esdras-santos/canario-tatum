@@ -17,10 +17,18 @@ class UserTemp {
   Tatum api = Tatum();
   String email = " ";
   String pass = " ";
+  String rpass = " ";
   Map<String, Map<String, dynamic>> wallets = {
     "ALGO": {"secret": " ", "address": " "},
     "ETH": {"mnemonic": " ", "xpub": " "},
   };
+
+  Map order = {
+    "price" : "",
+    "amount" : "",
+  };
+
+  Map coins = {"ALGO": 0, "ETH": 1};
 
   factory UserTemp() {
     return _user;
@@ -81,8 +89,10 @@ class UserTemp {
 
   Future<String> balance(String coin) async {
     if (coin == "eth") {
+      print(accounts[1]["balance"]["availableBalance"]);
       return accounts[1]["balance"]["availableBalance"];
     } else {
+      print(accounts[0]["balance"]["availableBalance"]);
       return accounts[0]["balance"]["availableBalance"];
     }
   }

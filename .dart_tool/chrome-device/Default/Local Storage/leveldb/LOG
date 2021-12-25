@@ -1,19 +1,19 @@
-2021/12/15-15:34:21.216 29ec Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.b1f83669\flutter_tools_chrome_device.8d80a9a\Default\Local Storage\leveldb/MANIFEST-000001
-2021/12/15-15:34:21.233 29ec Recovering log #25
-2021/12/15-15:34:21.237 29ec Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.b1f83669\flutter_tools_chrome_device.8d80a9a\Default\Local Storage\leveldb/000025.log 
-2021/12/15-15:34:21.266 29ec Delete type=2 #3
-2021/12/15-15:34:21.266 29ec Delete type=0 #3
-2021/12/15-15:34:21.266 29ec Delete type=2 #4
-2021/12/15-15:34:21.266 29ec Delete type=0 #4
-2021/12/15-15:34:21.266 29ec Delete type=2 #5
-2021/12/15-15:34:21.266 29ec Delete type=0 #7
-2021/12/15-15:34:21.267 29ec Delete type=2 #8
-2021/12/15-15:34:21.267 29ec Delete type=0 #10
-2021/12/15-15:34:21.268 29ec Delete type=2 #11
-2021/12/15-15:34:21.268 29ec Delete type=2 #14
-2021/12/15-15:34:21.268 29ec Delete type=0 #15
-2021/12/15-15:34:21.268 29ec Delete type=2 #16
-2021/12/15-15:34:21.268 29ec Delete type=0 #18
-2021/12/15-15:34:21.268 29ec Delete type=2 #19
-2021/12/15-15:34:21.268 29ec Delete type=0 #21
-2021/12/15-15:34:21.268 29ec Delete type=2 #22
+2021/12/16-18:28:01.777 18f0 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.ab248e3b\flutter_tools_chrome_device.a8b9d150\Default\Local Storage\leveldb/MANIFEST-000001
+2021/12/16-18:28:01.793 18f0 Recovering log #25
+2021/12/16-18:28:01.815 18f0 Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.ab248e3b\flutter_tools_chrome_device.a8b9d150\Default\Local Storage\leveldb/000025.log 
+2021/12/16-18:28:01.825 18f0 Delete type=2 #3
+2021/12/16-18:28:01.825 18f0 Delete type=0 #3
+2021/12/16-18:28:01.827 18f0 Delete type=2 #4
+2021/12/16-18:28:01.828 18f0 Delete type=0 #4
+2021/12/16-18:28:01.828 18f0 Delete type=2 #5
+2021/12/16-18:28:01.829 18f0 Delete type=0 #7
+2021/12/16-18:28:01.829 18f0 Delete type=2 #8
+2021/12/16-18:28:01.829 18f0 Delete type=0 #10
+2021/12/16-18:28:01.868 18f0 Delete type=2 #11
+2021/12/16-18:28:01.868 18f0 Delete type=2 #14
+2021/12/16-18:28:01.868 18f0 Delete type=0 #15
+2021/12/16-18:28:01.868 18f0 Delete type=2 #16
+2021/12/16-18:28:01.868 18f0 Delete type=0 #18
+2021/12/16-18:28:01.868 18f0 Delete type=2 #19
+2021/12/16-18:28:01.868 18f0 Delete type=0 #21
+2021/12/16-18:28:01.868 18f0 Delete type=2 #22
