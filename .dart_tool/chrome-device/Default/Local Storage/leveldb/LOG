@@ -1,19 +1,20 @@
-2021/12/16-18:28:01.777 18f0 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.ab248e3b\flutter_tools_chrome_device.a8b9d150\Default\Local Storage\leveldb/MANIFEST-000001
-2021/12/16-18:28:01.793 18f0 Recovering log #25
-2021/12/16-18:28:01.815 18f0 Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.ab248e3b\flutter_tools_chrome_device.a8b9d150\Default\Local Storage\leveldb/000025.log 
-2021/12/16-18:28:01.825 18f0 Delete type=2 #3
-2021/12/16-18:28:01.825 18f0 Delete type=0 #3
-2021/12/16-18:28:01.827 18f0 Delete type=2 #4
-2021/12/16-18:28:01.828 18f0 Delete type=0 #4
-2021/12/16-18:28:01.828 18f0 Delete type=2 #5
-2021/12/16-18:28:01.829 18f0 Delete type=0 #7
-2021/12/16-18:28:01.829 18f0 Delete type=2 #8
-2021/12/16-18:28:01.829 18f0 Delete type=0 #10
-2021/12/16-18:28:01.868 18f0 Delete type=2 #11
-2021/12/16-18:28:01.868 18f0 Delete type=2 #14
-2021/12/16-18:28:01.868 18f0 Delete type=0 #15
-2021/12/16-18:28:01.868 18f0 Delete type=2 #16
-2021/12/16-18:28:01.868 18f0 Delete type=0 #18
-2021/12/16-18:28:01.868 18f0 Delete type=2 #19
-2021/12/16-18:28:01.868 18f0 Delete type=0 #21
-2021/12/16-18:28:01.868 18f0 Delete type=2 #22
+2022/01/01-17:26:08.248 1a1c Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.65277c29\flutter_tools_chrome_device.5a523ad2\Default\Local Storage\leveldb/MANIFEST-000001
+2022/01/01-17:26:08.256 1a1c Recovering log #28
+2022/01/01-17:26:08.261 1a1c Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.65277c29\flutter_tools_chrome_device.5a523ad2\Default\Local Storage\leveldb/000028.log 
+2022/01/01-17:26:08.265 1a1c Delete type=2 #3
+2022/01/01-17:26:08.265 1a1c Delete type=0 #3
+2022/01/01-17:26:08.265 1a1c Delete type=2 #4
+2022/01/01-17:26:08.265 1a1c Delete type=0 #4
+2022/01/01-17:26:08.265 1a1c Delete type=2 #5
+2022/01/01-17:26:08.265 1a1c Delete type=0 #7
+2022/01/01-17:26:08.265 1a1c Delete type=2 #8
+2022/01/01-17:26:08.266 1a1c Delete type=0 #10
+2022/01/01-17:26:08.266 1a1c Delete type=2 #11
+2022/01/01-17:26:08.266 1a1c Delete type=2 #14
+2022/01/01-17:26:08.266 1a1c Delete type=0 #15
+2022/01/01-17:26:08.266 1a1c Delete type=2 #16
+2022/01/01-17:26:08.266 1a1c Delete type=0 #18
+2022/01/01-17:26:08.266 1a1c Delete type=2 #19
+2022/01/01-17:26:08.266 1a1c Delete type=0 #21
+2022/01/01-17:26:08.266 1a1c Delete type=2 #22
+2022/01/01-17:26:08.266 1a1c Delete type=0 #25

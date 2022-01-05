@@ -13,7 +13,7 @@ class SellRoundedButton extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       height: 55.0,
-      width: size.width * 0.4,
+      width: size.width * 0.1,
       child: Ink(
         decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -24,7 +24,10 @@ class SellRoundedButton extends StatelessWidget {
                       Colors.redAccent,
                       Colors.red,
                     ]
-                  : [Colors.grey],
+                  : [
+                      Colors.grey,
+                      Colors.blueGrey
+                    ],
             ),
             borderRadius: BorderRadius.circular(30.0)),
         child: Container(
@@ -35,7 +38,7 @@ class SellRoundedButton extends StatelessWidget {
             "SELL",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.black,
+              color: on ? Colors.white : Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),

@@ -7,13 +7,12 @@ class BuyRoundedButton extends StatelessWidget {
   }) : super(key: key);
 
   final bool on;
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
       height: 55.0,
-      width: size.width * 0.4,
+      width: size.width * 0.1,
       child: Ink(
         decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -24,7 +23,10 @@ class BuyRoundedButton extends StatelessWidget {
                       Colors.greenAccent,
                       Colors.green,
                     ]
-                  : [Colors.grey],
+                  : [
+                      Colors.grey,
+                      Colors.blueGrey
+                    ],
             ),
             borderRadius: BorderRadius.circular(30.0)),
         child: Container(
@@ -35,7 +37,7 @@ class BuyRoundedButton extends StatelessWidget {
             "BUY",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.black,
+              color: on ? Colors.white : Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),

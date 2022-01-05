@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:isolate';
 
+import 'appbar_components/appbar_rounded_button.dart';
 import 'login.dart';
 import 'trade.dart';
 import 'user/user.dart';
@@ -41,21 +42,9 @@ class _WalletState extends State<Wallet> {
         ethadd = value;
       });
     });
-    updateBalances();
+    
   }
 
-  //update the balances in each 3 seonds
-  Future updateBalances() async {
-    while (true) {
-      await Future.delayed(const Duration(seconds: 3));
-      var value = await user.getAccounts(user.accounts[0]["customerId"]);
-      
-      setState(() {
-        algoBalance = value[0]["balance"]["availableBalance"];
-        etherBalance = value[1]["balance"]["availableBalance"];
-      });
-    }
-  }
 
   Widget shader(String text, TextStyle style) {
     return ShaderMask(
@@ -363,86 +352,13 @@ class _WalletState extends State<Wallet> {
                       ],
                   child: Icon(Icons.menu, color: Colors.green))),
           actions: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(right: 20, top: 5, bottom: 5),
-              child: Container(
-                height: 40,
-                width: 80,
-                child: RaisedButton(
-                  onPressed: () {
+            AppbarRoundedButton(title: "Trade", onTap: () {
                     Navigator.pop(context);
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0)),
-                  padding: EdgeInsets.all(0.0),
-                  child: Ink(
-                    height: 45,
-                    width: 85,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            Colors.yellow,
-                            Colors.green,
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(8.0)),
-                    child: Container(
-                      width: 80,
-                      height: 20,
-                      constraints: BoxConstraints(
-                          maxWidth: 80.0, minHeight: 10.0, maxHeight: 20),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Trade",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 20, top: 5, bottom: 5),
-              child: RaisedButton(
-                onPressed: () {},
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0)),
-                padding: EdgeInsets.all(0.0),
-                child: Ink(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          Colors.yellow,
-                          Colors.green,
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(8.0)),
-                  child: Container(
-                    constraints:
-                        BoxConstraints(maxWidth: 100.0, minHeight: 20.0),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Wallet",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            )
+                  }),
+            SizedBox(width: 20,),
+            AppbarRoundedButton(title: "Wallet", onTap: (){}),
+            SizedBox(width: 20,),
+            
           ]),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

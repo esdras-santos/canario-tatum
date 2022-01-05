@@ -48,6 +48,7 @@ dependencies:
   cloud_firestore: ^3.1.2
   provider: ^6.0.1
   threading: ^0.0.10
+  decimal: ^2.1.0
 
 dev_dependencies:
   flutter_test:

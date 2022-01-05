@@ -24,8 +24,8 @@ class UserTemp {
   };
 
   Map order = {
-    "price" : "",
-    "amount" : "",
+    "price" : "0.0",
+    "amount" : "0.0",
   };
 
   Map coins = {"ALGO": 0, "ETH": 1};
@@ -34,12 +34,7 @@ class UserTemp {
     return _user;
   }
 
-  // void setMnemonic(String _username, _password) {
-  //   String seed = bip39.mnemonicToSeedHex(_username + _password);
-  //   bip32.BIP32 node =
-  //       bip32.BIP32.fromSeed(Uint8List.fromList(HEX.decode(seed)));
-  //   mnemonic = bip39.entropyToMnemonic(HEX.encode(node.privateKey!));
-  // }
+  
 
   String getMnemonic() {
     return mnemonic;
@@ -69,6 +64,7 @@ class UserTemp {
     wallets["ETH"]!["xpub"] = xpub;
     var acclist = await api.accountsWithBalances(customerid);
     accounts.add(acclist[0]);
+    print("\n\n\n"+accounts[0]["balance"]["availableBalance"]+"\n\n\n");
     accounts.add(acclist[1]);
   }
 

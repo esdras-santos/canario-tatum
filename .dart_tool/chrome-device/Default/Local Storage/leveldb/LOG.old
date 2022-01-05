@@ -1,19 +1,20 @@
-2021/12/15-15:34:21.216 29ec Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.b1f83669\flutter_tools_chrome_device.8d80a9a\Default\Local Storage\leveldb/MANIFEST-000001
-2021/12/15-15:34:21.233 29ec Recovering log #25
-2021/12/15-15:34:21.237 29ec Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.b1f83669\flutter_tools_chrome_device.8d80a9a\Default\Local Storage\leveldb/000025.log 
-2021/12/15-15:34:21.266 29ec Delete type=2 #3
-2021/12/15-15:34:21.266 29ec Delete type=0 #3
-2021/12/15-15:34:21.266 29ec Delete type=2 #4
-2021/12/15-15:34:21.266 29ec Delete type=0 #4
-2021/12/15-15:34:21.266 29ec Delete type=2 #5
-2021/12/15-15:34:21.266 29ec Delete type=0 #7
-2021/12/15-15:34:21.267 29ec Delete type=2 #8
-2021/12/15-15:34:21.267 29ec Delete type=0 #10
-2021/12/15-15:34:21.268 29ec Delete type=2 #11
-2021/12/15-15:34:21.268 29ec Delete type=2 #14
-2021/12/15-15:34:21.268 29ec Delete type=0 #15
-2021/12/15-15:34:21.268 29ec Delete type=2 #16
-2021/12/15-15:34:21.268 29ec Delete type=0 #18
-2021/12/15-15:34:21.268 29ec Delete type=2 #19
-2021/12/15-15:34:21.268 29ec Delete type=0 #21
-2021/12/15-15:34:21.268 29ec Delete type=2 #22
+2021/12/30-10:58:43.209 1484 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.3038fb3e\flutter_tools_chrome_device.91f83f7b\Default\Local Storage\leveldb/MANIFEST-000001
+2021/12/30-10:58:43.219 1484 Recovering log #28
+2021/12/30-10:58:43.255 1484 Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.3038fb3e\flutter_tools_chrome_device.91f83f7b\Default\Local Storage\leveldb/000028.log 
+2021/12/30-10:58:43.344 1484 Delete type=2 #3
+2021/12/30-10:58:43.345 1484 Delete type=0 #3
+2021/12/30-10:58:43.345 1484 Delete type=2 #4
+2021/12/30-10:58:43.345 1484 Delete type=0 #4
+2021/12/30-10:58:43.345 1484 Delete type=2 #5
+2021/12/30-10:58:43.345 1484 Delete type=0 #7
+2021/12/30-10:58:43.345 1484 Delete type=2 #8
+2021/12/30-10:58:43.346 1484 Delete type=0 #10
+2021/12/30-10:58:43.347 1484 Delete type=2 #11
+2021/12/30-10:58:43.347 1484 Delete type=2 #14
+2021/12/30-10:58:43.347 1484 Delete type=0 #15
+2021/12/30-10:58:43.347 1484 Delete type=2 #16
+2021/12/30-10:58:43.347 1484 Delete type=0 #18
+2021/12/30-10:58:43.347 1484 Delete type=2 #19
+2021/12/30-10:58:43.347 1484 Delete type=0 #21
+2021/12/30-10:58:43.348 1484 Delete type=2 #22
+2021/12/30-10:58:43.348 1484 Delete type=0 #25

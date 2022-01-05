@@ -116,12 +116,27 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                                   .signInWithEmailAndPassword(
                                       email: u.email, password: u.pass)
                                   .then((value) {
+                                    
                                 UserCredential userCredential = value;
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Trade()),
-                                );
+                                String useremail = auth.currentUser!.email!;
+                                u.setExternalId(useremail);
+                                wallets.where(useremail).get().then((value) {
+                                  var json = convert.jsonEncode(value.docs.asMap()[0]!.data());
+                                  var wallet = convert.jsonDecode(json) as Map;
+                                  u.initWallet(
+                                    wallet[useremail]["secretAlgo"],
+                                    wallet[useremail]["addressAlgo"],
+                                    wallet[useremail]["mnemonicEth"],
+                                    wallet[useremail]["xpubEth"],
+                                    wallet[useremail]["customerId"]).then((_){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Trade()),
+                                      );
+                                    });
+                                });
+                                
                               });
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'user-not-found') {

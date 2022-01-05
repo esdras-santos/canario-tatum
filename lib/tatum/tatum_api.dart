@@ -234,12 +234,12 @@ class Tatum {
     return jsonResponse;
   }
 
-  Future<List<Map>> openTrades(String type) async {
+  Future<List> openTrades(String type) async {
     var url =
         Uri.https("api-eu1.tatum.io", "/v3/trade/${type}", {"pageSize": "10"});
     var response = await http.get(url, headers: {"x-api-key": apikey});
 
-    var jsonResponse = convert.jsonDecode(response.body) as List<Map>;
+    var jsonResponse = convert.jsonDecode(response.body) as List;
     return jsonResponse;
   }
 
@@ -251,11 +251,19 @@ class Tatum {
     return jsonResponse;
   }
 
-  Future<List<Map>> myOpenTrades(id) async {
-    var url = Uri.https("api-eu1.tatum.io", "/v3/trade/${id}");
-    var response = await http.get(url, headers: {"x-api-key": apikey});
-
-    var jsonResponse = convert.jsonDecode(response.body) as List<Map>;
+  Future<List> myOpenTrades(id, type) async {
+    var url = Uri.https("api-eu1.tatum.io", "/v3/trade/$type");
+    Map<String, String> headers = {
+      "content-type": "application/json",
+      "x-api-key": apikey
+    };
+    final body = convert.jsonEncode({
+      "customerId": id,
+      "pageSize": 10,
+    });
+    var response = await http.post(url,body: body, headers: headers);
+    
+    var jsonResponse = convert.jsonDecode(response.body) as List;
     return jsonResponse;
   }
 
@@ -294,3 +302,5 @@ class Tatum {
     return jsonResponse;
   }
 }
+
+
