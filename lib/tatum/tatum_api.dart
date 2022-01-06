@@ -1,3 +1,11 @@
+// Copyright 2022 esdras-santos
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 import 'dart:async';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -301,6 +309,45 @@ class Tatum {
 
     return jsonResponse;
   }
+
+  Future<Map> deleteTrade(tradeId) async {
+    var url = Uri.https("api-eu1.tatum.io", "/v3/trade/$tradeId");
+    var response = await http.delete(url, headers: {"x-api-key": apikey});
+    print(response.body);
+    var jsonResponse = convert.jsonDecode(response.body) as Map;
+    return jsonResponse;
+  }
+
+  Future<List> getWithdraw() async {
+    var url = Uri.https("api-eu1.tatum.io", "/v3/offchain/withdrawal", {"pageSize": "10"});
+    var response = await http.get(url, headers: {"x-api-key": apikey});
+
+    var jsonResponse = convert.jsonDecode(response.body) as List;
+    return jsonResponse;
+  }
+
+  Future completeWithdraw(withdrawId, txId) async {
+    var url = Uri.https("api-eu1.tatum.io", "/v3/offchain/withdrawal/$withdrawId/$txId");
+    var response = await http.put(url, headers: {"x-api-key": apikey});
+
+  }
+
+  Future<Map> deleteWithdraw(id) async {
+    var url = Uri.https("api-eu1.tatum.io", "/v3/offchain/withdrawal/$id", {"revert": "true"});
+    var response = await http.delete(url, headers: {"x-api-key": apikey});
+
+    var jsonResponse = convert.jsonDecode(response.body) as Map;
+    return jsonResponse;
+  }
+
+  Future<Map> getTransactionByReference(reference) async {
+    var url = Uri.https("api-eu1.tatum.io", "/v3/ledger/transaction/reference/$reference");
+    var response = await http.get(url, headers: {"x-api-key": apikey});
+
+    var jsonResponse = convert.jsonDecode(response.body) as Map;
+    return jsonResponse;
+  }
+
 }
 
 

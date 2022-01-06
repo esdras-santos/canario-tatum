@@ -1,11 +1,18 @@
+// Copyright 2022 esdras-santos
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 import 'package:canarioswap/tatum/tatum_api.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartForm extends StatefulWidget {
-  ChartForm({ Key? key, required this.currency1, required this.currency2}) : super(key: key);
-  String currency1;
-  String currency2;
+  ChartForm({ Key? key, required this.chartData}) : super(key: key);
+  List<ChartData> chartData;
 
   @override
   _ChartFormState createState() => _ChartFormState();
@@ -21,18 +28,18 @@ class _ChartFormState extends State<ChartForm> {
     super.initState();
     _trackballBehavior = TrackballBehavior(
         enable: true, activationMode: ActivationMode.singleTap);
-    getChartData().then((value) => _chartData = value);
-    updateTrades();
+    // getChartData().then((value) => _chartData = value);
+    // updateTrades();
   }
 
-  Future updateTrades() async {
-    while (true) {
-      var value = await getChartData();
-      setState(() {
-        _chartData = value;
-      });
-    }
-  }
+  // Future updateTrades() async {
+  //   while (true) {
+  //     var value = await getChartData();
+  //     setState(() {
+  //       _chartData = value;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +65,7 @@ class _ChartFormState extends State<ChartForm> {
           margin: EdgeInsets.only(right: 20, top: 15),
           series: <CandleSeries>[
             CandleSeries<ChartData, DateTime>(
-                dataSource: _chartData,
+                dataSource: widget.chartData,
                 xValueMapper: (ChartData sales, _) => sales.x,
                 lowValueMapper: (ChartData sales, _) => sales.low,
                 highValueMapper: (ChartData sales, _) => sales.high,
@@ -72,25 +79,7 @@ class _ChartFormState extends State<ChartForm> {
     );
   }
 
-  Future<List<ChartData>> getChartData() async {
-    DateTime now = DateTime.now();
-    var date = DateTime.utc(now.year, now.month, now.day);
-    List<ChartData> chartList = [];
-    var charts = await api.chart(widget.currency1 + "/" + widget.currency2,
-        date.millisecondsSinceEpoch, date.millisecondsSinceEpoch, "DAY");
-    for (Map d in charts) {
-      chartList.add(
-        ChartData(
-            x: d["timestamp"],
-            high: d["high"],
-            low: d["low"],
-            open: d["open"],
-            close: d["close"]),
-      );
-    }
-
-    return chartList;
-  }
+  
 }
 class ChartData {
   final DateTime? x;

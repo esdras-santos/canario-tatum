@@ -1,11 +1,30 @@
+// Copyright 2022 esdras-santos
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 import 'package:canarioswap/tatum/tatum_api.dart';
 import 'package:flutter/material.dart';
 import 'package:decimal/decimal.dart';
+import 'dart:io';
 
 class OrdersForm extends StatefulWidget {
-  OrdersForm({ Key? key, required this.currency1, required this.currency2 }) : super(key: key);
-  String currency1;
-  String currency2;
+  List<Text> buyOrdersPrice;
+  List<Text> buyOrdersAmount;
+  List<Text> totalBuyOrdesAmount;
+  List<Text> sellOrdersPrice;
+  List<Text> sellOrdersAmount;
+  List<Text> totalSellOrdersAmount;
+  List<String> ids;
+  String lastPrice;
+  TextStyle lastPriceStyle; 
+  OrdersForm({ Key? key, required this.buyOrdersPrice, 
+    required this.buyOrdersAmount, required this.totalBuyOrdesAmount, required this.sellOrdersPrice, 
+    required this.sellOrdersAmount, required this.totalSellOrdersAmount, required this.ids, required this.lastPrice, required this.lastPriceStyle}) : super(key: key);
+  
   @override
   _OrdersFormState createState() => _OrdersFormState();
 }
@@ -15,66 +34,10 @@ class _OrdersFormState extends State<OrdersForm> {
   @override
   void initState(){
     super.initState();
-    buyOrdersPrice = [Text("price(${widget.currency1})", style: TextStyle(fontSize: 12)),];
-    buyOrdersAmount = [Text("amount(${widget.currency2})", style: TextStyle(fontSize: 12)),];
-    totalBuyOrdesAmount = [Text("total(${widget.currency1})", style: TextStyle(fontSize: 12)),];
-    priceAmountList("buy");
-    priceAmountList("sell");
-    updateTrades();
   }
   Tatum api = Tatum();
-  List<Text> buyOrdersPrice = [];
-  List<Text> buyOrdersAmount = [];
-  List<Text> totalBuyOrdesAmount = [];
-  List<Text> sellOrdersPrice = [];
-  List<Text> sellOrdersAmount = [];
-  List<Text> totalSellOrdesAmount = [];
-  List<String> ids = [];
 
-  Future updateTrades() async {
-    while (true) {
-      await priceAmountList('buy');
-      await priceAmountList('sell');
-    }
-  }
-
-  Future priceAmountList(String type) async {
-    
-    var jsonOrders = await api.openTrades(type);
-    TextStyle style = TextStyle(color: Colors.green, fontSize: 12);;
-    
-    if (type == 'buy') {
-      style = TextStyle(color: Colors.green, fontSize: 12);
-    } else if (type == 'sell') {
-      style = TextStyle(color: Colors.red, fontSize: 12);
-    }
-    
-    for (Map order in jsonOrders) {
-      if(!ids.contains(order["id"])){
-        
-        if (order["pair"] == widget.currency1 + "/" + widget.currency2) {
-          if(order["type"] == 'BUY'){
-            setState(() {
-              buyOrdersPrice.add(Text("${order["price"]}", style: style));
-              buyOrdersAmount.add(Text("${order["amount"]}", style: style));
-              totalBuyOrdesAmount.add(Text("${Decimal.parse((double.parse(order["amount"]) * double.parse(order["price"])).toString())}", style: style));
-            });
-          } else if (order["type"] == 'SELL'){
-            setState(() {
-              sellOrdersPrice.add(Text("${order["price"]}", style: style));
-              sellOrdersAmount.add(Text("${order["amount"]}", style: style));
-              totalSellOrdesAmount.add(Text("${Decimal.parse((double.parse(order["amount"]) * double.parse(order["price"])).toString())}", style: style));
-            });
-          }
-          
-        }
-        ids.add(order["id"]);
-      }
-    }
-
-    
-  }
-
+  
   
 
   @override
@@ -109,24 +72,29 @@ class _OrdersFormState extends State<OrdersForm> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Column(
-                      children: buyOrdersPrice,
+                      children: widget.buyOrdersPrice,
                     ),
                     Column(
-                      children: buyOrdersAmount,
+                      children: widget.buyOrdersAmount,
                     ),
                     Column(
-                      children: totalBuyOrdesAmount,
+                      children: widget.totalBuyOrdesAmount,
                     ),
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  height: 20,
-                  width: 300,
-                  child: Text("0.000000", style: TextStyle(fontSize: 14),)
-                ),
+              Row(
+                children: [
+                  SizedBox(width: 20,),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      height: 20,
+                      
+                      child: Text(widget.lastPrice, style: widget.lastPriceStyle,),
+                    ),
+                  ),
+                ],
               ),
               Container(
                 height: 165,
@@ -134,19 +102,19 @@ class _OrdersFormState extends State<OrdersForm> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      sellOrdersPrice.length > 0
+                      widget.sellOrdersPrice.length > 0
                           ? Column(
-                              children: sellOrdersPrice,
+                              children: widget.sellOrdersPrice,
                             )
                           : Container(),
-                      sellOrdersAmount.length > 0
+                      widget.sellOrdersAmount.length > 0
                           ? Column(
-                              children: sellOrdersAmount,
+                              children: widget.sellOrdersAmount,
                             )
                           : Container(),
-                      totalSellOrdesAmount.length > 0
+                      widget.totalSellOrdersAmount.length > 0
                         ? Column(
-                            children: totalSellOrdesAmount,
+                            children: widget.totalSellOrdersAmount,
                           )
                         : Container(),
                     ]),

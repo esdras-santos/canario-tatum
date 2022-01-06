@@ -1,4 +1,2 @@
-2022/01/01-17:26:07.821 1440 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.65277c29\flutter_tools_chrome_device.5a523ad2\Default\Site Characteristics Database/MANIFEST-000001
-2022/01/01-17:26:07.824 1440 Recovering log #6
-2022/01/01-17:26:07.826 1440 Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.65277c29\flutter_tools_chrome_device.5a523ad2\Default\Site Characteristics Database/000006.log 
-2022/01/01-17:26:07.827 1440 Delete type=0 #3
+2022/01/05-21:15:16.007 624 Creating DB C:\Users\esdra\AppData\Local\Temp\flutter_tools.c85ba9c0\flutter_tools_chrome_device.bf9d8670\Default\Site Characteristics Database since it was missing.
+2022/01/05-21:15:16.120 624 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.c85ba9c0\flutter_tools_chrome_device.bf9d8670\Default\Site Characteristics Database/MANIFEST-000001

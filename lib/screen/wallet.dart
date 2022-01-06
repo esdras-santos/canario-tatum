@@ -1,3 +1,11 @@
+// Copyright 2022 esdras-santos
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,7 +37,11 @@ class _WalletState extends State<Wallet> {
     // this asset list need to be populated with the api data
     user.balance("eth").then((value) {
       setState(() {
-        etherBalance = "$value";
+        if(value.length > 6){
+          etherBalance = value.substring(0,7);
+        }else{
+          etherBalance = "$value";
+        }
       });
       return user.balance("algo");
     }).then((value) {
@@ -137,13 +149,15 @@ class _WalletState extends State<Wallet> {
                     user.getFee(ethadd, address, amount).then((value) {
                       user
                           .withdraw(
-                              user.accounts[1]["id"], address, amount, value)
-                          .then((_) => Navigator.pop(context));
+                              user.accounts[1]["id"], address, (int.parse(amount) / 1000000000000000000).toStringAsFixed(16), (int.parse(value) / 1000000000000000000).toStringAsFixed(16))
+                          .then((_) {
+                            Navigator.pop(context);
+                          } );
                     });
                   } else {
                     user
                         .withdraw(
-                            user.accounts[0]["id"], address, amount, "0.001")
+                            user.accounts[0]["id"], address, (int.parse(amount) / 1000000).toStringAsFixed(6), "0.001")
                         .then((_) => Navigator.pop(context));
                   }
                 },

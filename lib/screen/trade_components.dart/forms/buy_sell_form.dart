@@ -1,3 +1,11 @@
+// Copyright 2022 esdras-santos
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 import 'package:canarioswap/screen/user/user.dart';
 import 'package:canarioswap/tatum/tatum_api.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +29,7 @@ class _BuySellFormState extends State<BuySellForm> {
   bool buyon = true;
   bool sellon = false;
   var total = 0.0;
+  
 
   var decisionButtonCollor = Colors.green[600];
   var decisionButtonLetter = Colors.white;
@@ -128,7 +137,7 @@ class _BuySellFormState extends State<BuySellForm> {
                     controller: amountController,
                     // keyboardType: TextInputType.number,
                     inputFormatters: [
-                      CurrencyTextInputFormatter(maxInputValue: double.parse(user.accounts[user.coins[widget.currency2]]["balance"]["availableBalance"])),
+                      CurrencyTextInputFormatter(maxInputValue: double.parse(user.accounts[user.coins[widget.currency2]["index"]]["balance"]["availableBalance"])),
                     ],
                     cursorColor: Colors.green,
                     decoration: InputDecoration(
@@ -165,7 +174,7 @@ class _BuySellFormState extends State<BuySellForm> {
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.grey[200],
                   ),
-                  child: Text("${Decimal.parse(total.toString())}", style: TextStyle(fontSize: 12)),
+                  child: Text("${Decimal.parse(total.toString())}", style: TextStyle(fontSize: 18)),
                 ),
                 SizedBox(width: 20,)
               ],
@@ -173,8 +182,8 @@ class _BuySellFormState extends State<BuySellForm> {
             RaisedButton(
               onPressed: () {
                 
-                String id1 = user.accounts[user.coins[widget.currency1]]["id"];
-                String id2 = user.accounts[user.coins[widget.currency2]]["id"];
+                String id1 = user.accounts[user.coins[widget.currency1]["index"]]["id"];
+                String id2 = user.accounts[user.coins[widget.currency2]["index"]]["id"];
                 
                 api
                     .trade(id1, id2, user.order["price"], user.order["amount"], widget.currency1 + "/" + widget.currency2,

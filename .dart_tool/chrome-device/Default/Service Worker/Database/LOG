@@ -1,3 +1,2 @@
-2022/01/01-17:26:08.927 122c Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.65277c29\flutter_tools_chrome_device.5a523ad2\Default\Service Worker\Database/MANIFEST-000001
-2022/01/01-17:26:09.528 122c Recovering log #3
-2022/01/01-17:26:09.532 122c Reusing old log C:\Users\esdra\AppData\Local\Temp\flutter_tools.65277c29\flutter_tools_chrome_device.5a523ad2\Default\Service Worker\Database/000003.log 
+2022/01/05-21:15:20.536 1990 Creating DB C:\Users\esdra\AppData\Local\Temp\flutter_tools.c85ba9c0\flutter_tools_chrome_device.bf9d8670\Default\Service Worker\Database since it was missing.
+2022/01/05-21:15:20.553 1990 Reusing MANIFEST C:\Users\esdra\AppData\Local\Temp\flutter_tools.c85ba9c0\flutter_tools_chrome_device.bf9d8670\Default\Service Worker\Database/MANIFEST-000001

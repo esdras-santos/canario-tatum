@@ -1,22 +1,34 @@
+// Copyright 2022 esdras-santos
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 import 'package:canarioswap/screen/user/user.dart';
 import 'package:canarioswap/tatum/tatum_api.dart';
-import 'package:decimal/decimal.dart';
+
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 class MyOrders extends StatefulWidget {
-  const MyOrders({ Key? key }) : super(key: key);
+  List<Text> myOrdersPrice;
+  List<Text> myOrdersAmount;
+  List<Text> myPairs;
+  List<Text> myOrdersTypes;
+  List<Text> myOrdersTotal;
+  List<String> ids;
+  List<Widget> deleteButton;
+
+  MyOrders({ Key? key, required this.myOrdersPrice, required this.myOrdersAmount, required this.myPairs,
+   required this.myOrdersTypes, required this.myOrdersTotal, required this.ids, required this.deleteButton}) : super(key: key);
 
   @override
   _MyOrdersState createState() => _MyOrdersState();
 }
 
 class _MyOrdersState extends State<MyOrders> {
-  List<Text> myOrdersPrice = [Text("Price"),];
-  List<Text> myOrdersAmount = [Text("Amount"),];
-  List<Text> myPairs = [Text("Pair"),];
-  List<Text> myOrdersTypes = [Text("Type"),];
-  List<Text> myOrdersTotal = [Text("Total")];
-  List<String> ids = [""];
 
   UserTemp user = UserTemp();
   
@@ -25,54 +37,9 @@ class _MyOrdersState extends State<MyOrders> {
   @override
   void initState(){
     super.initState();
-    myOrdersList(user.accounts[0]["customerId"], "buy");
-    myOrdersList(user.accounts[0]["customerId"], "sell");
   }
 
-  Future myOrdersList(String id, type) async {
-    while(true){
-      var jsonOrders = await api.myOpenTrades(id, type);
-
-      for (Map order in jsonOrders) {
-        if(!ids.contains(order["id"])){
-          setState(() {
-            if (order["type"] == 'BUY') {
-              myOrdersPrice.add(Text("${order["price"]}",
-                      style: TextStyle(color: Colors.green)));
-              myOrdersAmount.add(Text("${order["amount"]}",
-                      style: TextStyle(color: Colors.green)));
-              myOrdersTypes.add(Text("${order["type"]}",
-                      style: TextStyle(color: Colors.green)));
-              myOrdersTotal.add(Text("${Decimal.parse((double.parse(order["amount"]) * double.parse(order["price"])).toString())}",
-                      style: TextStyle(color: Colors.green)));
-              myPairs.add(
-                    Text("${order["pair"]}", style: TextStyle(color: Colors.black)));
-              
-            } else if (order["type"] == 'SELL') {
-              myOrdersPrice.add(Text("${order["price"]}",
-                      style: TextStyle(color: Colors.red)));
-              myOrdersAmount.add(Text("${order["amount"]}",
-                      style: TextStyle(color: Colors.red)));
-              myOrdersTypes.add(Text("${order["type"]}",
-                      style: TextStyle(color: Colors.red)));
-              myOrdersTotal.add(Text("${Decimal.parse((double.parse(order["amount"]) * double.parse(order["price"])).toString())}",
-                      style: TextStyle(color: Colors.red)));
-              myPairs.add(
-                    Text("${order["pair"]}", style: TextStyle(color: Colors.black)));
-              
-            }
-          });
-          ids.add(order["id"]);
-        }
-               
-      }
-    }
-    
-    
-  }
-
-
-
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -91,24 +58,27 @@ class _MyOrdersState extends State<MyOrders> {
       ),
       child: Container(
         height: 130,
-        width: 600,
+        width: 630,
         child: Column(
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               Column(
-                children: myPairs,
+                children: widget.myPairs,
               ),
               Column(
-                children: myOrdersTypes,
+                children: widget.myOrdersTypes,
               ),
               Column(
-                children: myOrdersPrice,
+                children: widget.myOrdersPrice,
               ),
               Column(
-                children: myOrdersAmount,
+                children: widget.myOrdersAmount,
               ),
               Column(
-                children: myOrdersTotal,
+                children: widget.myOrdersTotal,
+              ),
+              Column(
+                children: widget.deleteButton,
               ),
             ]),
           ],
