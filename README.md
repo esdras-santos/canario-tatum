@@ -16,6 +16,6 @@ git clone https://github.com/esdras-santos/canario
 
 3. Inside the repositore type run: 
 ```shell
-flutter run
+flutter run --release
 ```
 
