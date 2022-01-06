@@ -19,3 +19,5 @@ git clone https://github.com/esdras-santos/canario
 flutter run --release
 ```
 
+# Look extra media directory for photos and video
+
